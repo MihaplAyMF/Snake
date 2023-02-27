@@ -146,7 +146,7 @@ void Apple(COORD& c, char symb, COORD* snake) {
         // _msize(snake)/sizeof(snake) - довжина змійки length (я б міг її просто передати, хз як краще)
 
         for (int i = 0; i < _msize(snake) / sizeof(snake); i++) {
-            if (c.X != snake[i].X || c.Y != snake[i].Y) {
+            if (c.X != snake[i].X && c.Y != snake[i].Y) {
                 flag = false;
             }
         }
