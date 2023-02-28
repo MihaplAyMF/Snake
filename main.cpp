@@ -5,6 +5,9 @@
 #include "Function.h"
 #include "Snake.h"
 
+#define HEIGHT 40
+#define WIDTH 80
+
 void Apple(COORD& c, char symb, COORD* snake);
 
 using namespace std;
@@ -25,12 +28,11 @@ int main() {
 
     // Створюємо основні змінні програми
 
-    const int width = 80, height = 40; // Розмір поля, ширина та висота
     int sleep_time = 75; // Частота кадрів
     char symb = ' ';
     bool flag = true, flagApple = false;
     int direct = 87;
-    int length = 3;
+    int length = 4;
     COORD c, cordApple{};
 
 
@@ -38,19 +40,19 @@ int main() {
 
     SetColor(0x44);
 
-    for (int i = 0; i < width; i++) {
+    for (int i = 0; i < WIDTH; i++) {
 
         c.Y = 0;
         c.X = i;
         SetCursor(c);
         putchar(symb);
 
-        c.Y = height - 1;
+        c.Y = HEIGHT - 1;
         SetCursor(c);
         putchar(symb);
     }
 
-    for (int i = 0; i < height; i++) {
+    for (int i = 0; i < HEIGHT; i++) {
 
         c.Y = i;
         c.X = 0;
@@ -58,15 +60,13 @@ int main() {
         putchar(symb);
         putchar(symb);
 
-        c.X = width - 2;
+        c.X = WIDTH - 2;
         SetCursor(c);
         putchar(symb);
         putchar(symb);
     }
 
     SetColor(0x00);
-
-    //apple(c, symb);
 
     // Створюємо об'єкт класа snake
     Snake snake(length, symb);
@@ -140,14 +140,17 @@ void Apple(COORD& c, char symb, COORD* snake) {
     bool flag = true;
 
     do {
-        c.X = 2 * randint(1, 38);
-        c.Y = randint(1, 38);
+        c.X = 2*randint(1, (WIDTH/2)-2);
+        c.Y = randint(1, HEIGHT-2);
 
         // _msize(snake)/sizeof(snake) - довжина змійки length (я б міг її просто передати, хз як краще)
 
         for (int i = 0; i < _msize(snake) / sizeof(snake); i++) {
-            if (c.X != snake[i].X && c.Y != snake[i].Y) {
-                flag = false;
+            if (c.X == snake[i].X && c.Y == snake[i].Y) {
+                flag = true;
+                continue;
+            } else { 
+                flag = false; 
             }
         }
 

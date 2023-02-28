@@ -13,6 +13,13 @@ void Landslide(COORD* (&snake), int length) {
 
 }
 
+void Copy(COORD* (&snake), COORD* (&copySnake), int n) {
+
+	for (int i = 0; i < n; i++) {
+		snake[i] = copySnake[i];
+	}
+}
+
 // Реалізуємо методи класу snake
 
 Snake::Snake(int length, char symb) {
@@ -20,7 +27,7 @@ Snake::Snake(int length, char symb) {
 	this->symb = symb;
 	snakeCord = new COORD[length + 1]; // snakeCord - динамічний масив координат тіла змійки
 	int x = 2 * randint(10, 20);
-	int y = 20;
+	int y = 10;
 	COORD c; // c - cord (x, y)
 
 	// Виводимо усю змійку
@@ -96,4 +103,10 @@ COORD* Snake::GetSnake() {
 
 void Snake::SetLenght(int length) {
 	this->length = length;
+
+	COORD* copyX = new COORD[length+1];
+	Copy(copyX, snakeCord, length);
+	snakeCord = new COORD[length+1];
+	Copy(snakeCord, copyX, length);
+	delete copyX;
 }
